@@ -1,11 +1,12 @@
+// App.tsx
 import { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
-  const [tasks, setTasks] = useState<string[]>([]); // タスクの配列をstateとして管理
-  const [newTask, setNewTask] = useState<string>(''); // 新しいタスクの入力値をstateとして管理
+  const [tasks, setTasks] = useState<string[]>([]);
+  const [newTask, setNewTask] = useState<string>('');
 
-  // 新しいタスクを追加する関数
   const addTask = () => {
     if (newTask.trim() !== '') {
       setTasks([...tasks, newTask]);
@@ -13,7 +14,6 @@ function App() {
     }
   };
 
-  // タスクを削除する関数
   const deleteTask = (index: number) => {
     const updatedTasks = [...tasks];
     updatedTasks.splice(index, 1);
@@ -22,24 +22,30 @@ function App() {
 
   return (
     <div>
-      <h1>ToDoリスト</h1>
+      <h1 className="display-4">ToDoリスト</h1>
 
-      {/* 新しいタスクのフォーム */}
-      <div>
+      <div className="input-group mb-3">
         <input
           type="text"
+          className="form-control"
+          placeholder="新しいタスクを入力"
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
         />
-        <button onClick={addTask}>追加</button>
+        <div className="input-group-append">
+          <button className="btn btn-outline-primary" type="button" onClick={addTask}>
+            追加
+          </button>
+        </div>
       </div>
 
-      {/* タスクのリスト */}
-      <ul>
+      <ul className="list-group">
         {tasks.map((task, index) => (
-          <li key={index}>
+          <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
             {task}
-            <button onClick={() => deleteTask(index)}>削除</button>
+            <button className="btn btn-outline-danger" onClick={() => deleteTask(index)}>
+              削除
+            </button>
           </li>
         ))}
       </ul>
